@@ -1,0 +1,19 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.chartContainer {
+  width: 600px;
+}
