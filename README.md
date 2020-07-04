@@ -40,5 +40,16 @@
 - README
 
 
+## component tree
+- App 
+    - Dashboard - '/'
+        - Not signed description of service - 'dashboard'
+            - onBoarding Form '/onboarding'
+        - Signed in dashboard view - '/dashboard'
+            - ChartView
+            - TableView
+                - Add Share Holder '/shareholder'
+                - Edit User '/shareholder/2' 
+
 
 ## TODO's 
