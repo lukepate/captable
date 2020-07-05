@@ -6,10 +6,15 @@ import { Table } from 'antd';
 
 interface TableViewProps {
     data: any;
+    handleEdit: any;
 }
 
-const TableView: React.FC<TableViewProps> = ({ data }) => {
+const TableView: React.FC<TableViewProps> = ({ data, handleEdit }) => {
     // const [selectedRowKeys, setSelectedRowKeys] = useState();
+    const editHandle = (record: any) => {
+        handleEdit(record);
+    };
+
 
     const columns = [
         {
@@ -46,42 +51,22 @@ const TableView: React.FC<TableViewProps> = ({ data }) => {
             dataIndex: 'ownership',
             key: 'ownership',
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text: any, record: any) => (
+                <button onClick={() => editHandle(record)}>Edit</button>
+            ),
+        },
     ];
                                 
-
-
-    // const columns = [
-    //     {
-    //         title: 'Name',
-    //         dataIndex: 'name',
-    //     },
-    //     {
-    //         title: 'Age',
-    //         dataIndex: 'age',
-    //         // defaultSortOrder: 'descend',
-    //         sorter: (a: any, b: any) => {
-    //             return a.age - b.age;
-    //         },
-    //     },
-    //     {
-    //         title: 'Address',
-    //         dataIndex: 'address',
-    //     },
-    // ];
-
-    // const data = [];
-    // for (let i = 0; i < 6; i++) {
-    //     data.push({
-    //         key: i,
-    //         name: `Edward King ${i}`,
-    //         age: i,
-    //         address: `London, Park Lane no. ${i}`,
-    //     });
-    // }
-
     return (
-        // <Table dataSource={data} columns={columns} />
-        <Table columns={columns} dataSource={data} pagination={false} />
+        <Table bordered
+            title={() => 'Header'}
+            footer={() => 'Footer'}
+            columns={columns} 
+            dataSource={data} 
+            pagination={false} />
     )
 };
 

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.scss';
 import Dashboard from './components/DashboardView';
 
+
 function App() {
   return (
-    <div className="App">
-      <div className="chartContainer">
+      <div className="App">
         <Dashboard />
-        </div>
-    </div>
+      </div>
   );
 }
 

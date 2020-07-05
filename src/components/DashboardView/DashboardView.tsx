@@ -1,28 +1,12 @@
 import React, { useState } from 'react';
-import { Select } from 'antd';
-
 // import styles from './Dashboard.module.scss';
-import TableView from '../TableView';
-import ChartView from '../ChartView';
 import OnboardingView from '../OnboardingView';
+import NavBarView from '../NavBarView';
+import HomePageView from '../HomePageView';
+import CapTableView from '../CapTableView';
+import { ShareUsers } from '../../store/types/ShareUsers';
+import { Company } from '../../store/types/Company';
 
-const { Option } = Select;
-
-interface Chart {
-    x: string,
-    y: number
-}
-
-interface ShareUsers {
-    id: string;
-    key: number;
-    shareholder: string;
-    role: string;
-    shares: number;
-    PPS: number;
-    capital: number;
-    ownership: number;
-}
 
 
 const data = [
@@ -67,51 +51,75 @@ const data = [
         ownership: 150
     },
 ];
-// console.log(shareholderData, 'dont need this');
+
 const DashboardView: React.FC= () => {  
     const [idCounter, setIdCounter] = useState(0);
     const [shareUsers, setShareUsers] = useState<ShareUsers[]>([]);
+    const [inSignedIn, setSignedIn] = useState(false);
+    console.log(setIdCounter, setSignedIn);
+
+    const [isOnboardingActive, setOnboardingActive] = useState(false);
+    const [companyData, setCompanyData] = useState<Company>();
+    console.log(companyData, 'just for lint');
     
     const initialChartData = () => {
         return data.map(slice => ({ x: slice.shareholder, y: slice.shares }));
     };
-    const [selectedChartData, setSelectedChartData] = useState(initialChartData);
 
-    const setChartByRole = (selectedRole: any) => {
-        const roleData = shareUsers.filter(el => el.role === selectedRole);
-        const selectedData = roleData.map(slice => ({ x: slice.shareholder, y: slice.shares }));
-        setSelectedChartData(selectedData);
-    }
+    const [selectedChartData, setSelectedChartData] = useState(initialChartData);
    
-    const onFinish = async (event: any) => {
-        console.log('success', event)
+    // TODO do something with company data;
+    const onCompanySubmisison = async (event: any) => {
+        setCompanyData(event);
+    };
+
+    const onShareHolderSubmisison = async (event: any) => {
         event.id = idCounter;
         event.key = idCounter;
 
         setIdCounter(idCounter + 1);
         setShareUsers([...shareUsers, event]);
     };
+
+    const onCompleteSetup = () => {
+        setSignedIn(true);
+    }
     
     const onFinishFailed = (errorMessage: any) => {
         console.log('Failed:', errorMessage);
     };
+
+    const setChartByRole = (selectedRole: any) => {
+        const roleData = shareUsers.filter(el => el.role === selectedRole);
+        const selectedData = roleData.map(slice => ({ x: slice.shareholder, y: slice.shares }));
+        setSelectedChartData(selectedData);
+    }
+
+    const setOnboardingHandle = () => {
+        console.log('setOnboardingHandle')
+        setOnboardingActive(true);
+    }
     
     return (
-        <div>
-            Dashboard
-            <button onClick={initialChartData}>test {initialChartData}</button> 
+        <>
+            <NavBarView />
+   
+            {inSignedIn && (
+                <CapTableView shareUsers={shareUsers} selectedChartData={selectedChartData} selectRoleHandle={setChartByRole} onFinishFailed={onFinishFailed} onShareHolderSubmisison={onShareHolderSubmisison} onCompanySubmisison={onCompanySubmisison} />
+            )}
 
+            {!inSignedIn && (
+                <>
+                    {!isOnboardingActive && (
+                        <HomePageView setOnboardingHandle={setOnboardingHandle} />
+                    )}
 
-            <Select defaultValue="Founder" style={{ width: 120 }} onChange={setChartByRole} >
-                <Option value="Founder">Founder</Option>
-                <Option value="Investor">Investor</Option>
-                <Option value="Employee">Employee</Option>
-            </Select>
-
-            <ChartView data={selectedChartData} />
-            <TableView data={shareUsers} />
-            <OnboardingView onFinishFailedHandle={onFinishFailed} onFinishHandle={onFinish}/>
-        </div>
+                    {isOnboardingActive && (
+                        <OnboardingView data={shareUsers} onFinishFailedHandle={onFinishFailed} onCompanySubmisison={onCompanySubmisison} onShareHolderSubmisison={onShareHolderSubmisison} onCompleteSetup={onCompleteSetup}/>
+                    )}
+                </>
+            )}
+        </>
     )
 };
 
