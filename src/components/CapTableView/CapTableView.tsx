@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-// import TableView from './TableView';
+import TableView from './TableView';
 import ChartView from './ChartView';
+import AddView from './AddView';
+import EditView from './EditView';
 import './CapTableView.scss';
-
-// import OnboardingView from '../OnboardingView';
 
 import { Button, Tabs } from 'antd';
 const { TabPane } = Tabs;
@@ -15,41 +15,48 @@ interface TableViewProps {
     onFinishFailed: (errorMessage: any) => void;
     onShareHolderSubmisison: (event: any) => void;
     onCompanySubmisison: (event: any) => void;
+    onShareHolderEditSubmisison: (event: any) => void;
+   
 }
 
 
-const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData, selectRoleHandle, onFinishFailed, onShareHolderSubmisison, onCompanySubmisison }) => {
+const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData, selectRoleHandle, onFinishFailed, onShareHolderSubmisison, onCompanySubmisison, onShareHolderEditSubmisison }) => {
     const [isAddUserActive, setAddUserActive] = useState(false);
+    const [isEditUserActive, setEditUserActive] = useState(false);
     const [editUser, setEditUser] = useState({});
-    console.log(editUser, setEditUser);
 
-    // const onFinishHandleCapView = (event: any) => {
-    //     console.log(event, 'event');
-    //     setAddUserActive(false);
-    //     onShareHolderSubmisison(event);
-    // }
+    const onFinishHandleCapView = (event: any) => {
+        setAddUserActive(false);
+        onShareHolderSubmisison(event);
+        selectRoleHandle('Shareholder');
+    }
 
     // TODO: handle edit
-    // const handleEdit = (record: any) => {
-    //     setAddUserActive(true);
-    //     setEditUser(record);
-    //     console.log(isAddUserActive, 'this was hit');
-    // }
+    const handleEdit = (record: any) => {
+        console.log('handle edit hit');
+        onShareHolderEditSubmisison(record);
+        setEditUserActive(false);
+    }
+
+    const selectUserToEdit = (record: any) => {
+        setEditUser(record);
+        setEditUserActive(true);
+    }
     
     return (
         <div className="capview-container">
-            {!isAddUserActive && (
+            {!isAddUserActive && !isEditUserActive && (
                 <>
-                    <h1>Ownership</h1>
+                    <h1 className='capview-headline'>Ownership Overview</h1>
                     {/* TODO set def    ault to state */}
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="Cap Table Overview" key="1">
-                            <ChartView selectedChartData={selectedChartData} selectRoleHandle={selectRoleHandle} />
+                            <ChartView shareUsers={shareUsers} selectedChartData={selectedChartData} selectRoleHandle={selectRoleHandle} />
                         </TabPane>
 
                         <TabPane tab="Shares" key="2">
-                            <Button onClick={() => setAddUserActive(true)}>Add ShareHolder</Button>
-                            {/* <TableView data={shareUsers} handleEdit={handleEdit}/> */}
+                            <TableView data={shareUsers} handleEdit={selectUserToEdit}/>
+                            <Button className='shareholder-add-btn' onClick={() => setAddUserActive(true)}>Add ShareHolder</Button>
                         </TabPane>
 
                         <TabPane tab="Plans and Equity Awards" key="3">
@@ -60,7 +67,12 @@ const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData,
             )}
             {isAddUserActive && (
                 <>
-                    {/* <OnboardingView data={editUser} onFinishFailedHandle={onFinishFailed} onCompanySubmisison={onCompanySubmisison} onShareHolderSubmisison={onShareHolderSubmisison} onCompleteSetup={() => {}}/> */}
+                    <AddView onFinishFailed={onFinishFailed} onFinishHandleCapView={onFinishHandleCapView}/>
+                </>
+            )}
+            {isEditUserActive && (
+                <>
+                    <EditView currentuser={editUser} handleEdit={handleEdit} onFinishFailed={onFinishFailed}/>
                 </>
             )}
 

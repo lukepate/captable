@@ -29,6 +29,7 @@
 
             .form-instructions {
                 text-align: left;
+                padding-bottom: 20px;
             }
         }
     }
@@ -36,4 +37,9 @@
 
 .table-padding {
     padding: 20px 0;
+}
+
+input {
+    width: 100%;
+    max-width: 400px;
 }

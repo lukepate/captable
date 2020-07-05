@@ -1,8 +1,6 @@
-// import React, { useState } from 'react';
 import React from 'react';
-// import styles from './Dashboard.module.scss';
+import './TableView.scss';
 import { Table } from 'antd';
-// const { Column, ColumnGroup } = Table;
 
 interface TableViewProps {
     data: any;
@@ -10,7 +8,6 @@ interface TableViewProps {
 }
 
 const TableView: React.FC<TableViewProps> = ({ data, handleEdit }) => {
-    // const [selectedRowKeys, setSelectedRowKeys] = useState();
     const editHandle = (record: any) => {
         handleEdit(record);
     };
@@ -55,15 +52,13 @@ const TableView: React.FC<TableViewProps> = ({ data, handleEdit }) => {
             title: 'Action',
             key: 'action',
             render: (text: any, record: any) => (
-                <button onClick={() => editHandle(record)}>Edit</button>
+                <span className='edit-btn' onClick={() => editHandle(record)}>Edit</span>
             ),
         },
     ];
                                 
     return (
-        <Table bordered
-            title={() => 'Header'}
-            footer={() => 'Footer'}
+        <Table 
             columns={columns} 
             dataSource={data} 
             pagination={false} />

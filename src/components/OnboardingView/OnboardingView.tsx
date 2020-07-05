@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './OnboardingView.scss';
 import { Select, Button, Form, Input, InputNumber, Timeline, Table } from 'antd';
+import { Columns }  from '../../store/types/Column';
 const { Option } = Select;
 
 interface OnbaordingViewProps {
@@ -14,13 +15,6 @@ interface OnbaordingViewProps {
 const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison, onCompanySubmisison, onFinishFailedHandle, data, onCompleteSetup }) => {
     const [isTimelineActice, setTimelineActice] = useState(1);
     const [form] = Form.useForm();
-
-    const handleDataFill = (input: any) => {
-        if(data) {
-            return data[input] ? data[input] : ''; 
-        }
-        return '';
-    }; 
 
     const indexTimeline = (index: number) => {  
         if (index === isTimelineActice) return 'red';
@@ -37,37 +31,10 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
     }
 
     const onHandlShareSubmission = (event: any) => {
+        // incrementTimeline();
         form.resetFields();
         onShareHolderSubmisison(event);
     }
-
-    const columns = [
-        {
-            title: 'Shareholder',
-            dataIndex: 'shareholder',
-            key: 'shareholder',
-        },
-        {
-            title: 'Shares',
-            dataIndex: 'shares',
-            key: 'shares',
-        },
-        {
-            title: 'Price per Share',
-            dataIndex: 'PPS',
-            key: 'PPS',
-        },
-        {
-            title: 'Capital',
-            dataIndex: 'capital',
-            key: 'capital',
-        },
-        {
-            title: 'Ownership',
-            dataIndex: 'ownership',
-            key: 'ownership',
-        },
-    ];
 
     return (
         <div className='container'>
@@ -124,7 +91,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                         required: true, message: 'Total funding raised'
                                     }]}
                                 >
-                                    <Input defaultValue={handleDataFill('shareholder')} />
+                                    <Input />
                                 </Form.Item>
 
                                 <Form.Item>
@@ -139,9 +106,11 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                             <h2 className='form-headline'>Next</h2>
                             <p className="form-instructions">We'll add the companies founders, investors and employees. You can always add or edit members later.</p>
 
-                            <div className='table-padding'>
-                                <Table dataSource={data} columns={columns} pagination={false} />
-                            </div>
+                            {data.length !== 0 && (
+                                <div className='table-padding'>
+                                    <Table dataSource={data} columns={Columns} pagination={false} />
+                                </div>
+                            )}
                             
                             <h2 className='form-headline'>Add A Stakeholder</h2>
                             <Form
@@ -158,7 +127,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                     name="shareholder"
                                     rules={[{ required: true, message: 'Please input your shareholder name!' }]}
                                 >
-                                    <Input defaultValue={handleDataFill('shareholder')} />
+                                    <Input />
                                 </Form.Item>
 
                                 <Form.Item
@@ -166,7 +135,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                     name="shares"
                                     rules={[{ required: true, message: 'Please input your shares!' }]}
                                 >
-                                    <InputNumber defaultValue={handleDataFill('shares')} />
+                                    <InputNumber />
                                 </Form.Item>
 
                                 <Form.Item
@@ -174,7 +143,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                     name="PPS"
                                     rules={[{ required: true, message: 'Please input your Price Per Share!' }]}
                                 >
-                                    <InputNumber defaultValue={handleDataFill('PPS')} />
+                                    <InputNumber />
                                 </Form.Item>
 
                                 <Form.Item
@@ -183,7 +152,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                     hasFeedback
                                     rules={[{ required: true, message: 'Please select your role!' }]}
                                 >
-                                    <Select placeholder="Please select a Role" defaultValue={handleDataFill('role')}>
+                                    <Select placeholder="Please select a Role">
                                         <Option value="Founder">Founder</Option>
                                         <Option value="Investor">Investor</Option>
                                         <Option value="Employee">Employee</Option>
@@ -208,9 +177,9 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
 
                                 <Form.Item>
                                     {/* TODO add or add another check */}
-                                    <Button type="primary" htmlType="submit">Add Another</Button>
+                                    <Button type="primary" htmlType="submit">{data.length > 0 ? 'Add Another' : 'Add'}</Button>
                                     {/* Check shares length to validate */}
-                                    <Button onClick={incrementTimeline}>Submit ></Button>
+                                    <Button onClick={incrementTimeline} disabled={data.length === 0} >Submit ></Button>
                                 </Form.Item>
                             </Form>
                         </>
@@ -219,7 +188,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                     {isTimelineActice === 4 && (
                         <>
                             <h2 className='form-headline'>Signatories</h2>
-                            <p className="form-instructions">By confirming below, I agree to all terms and conditions</p>
+                            <p className="form-instructions">By confirming below, I agree to all terms and conditions and and ready to view my Cap Table.</p>
 
                             <Button onClick={onCompleteSetup}>Confirm</Button>
                         </>

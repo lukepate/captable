@@ -1,28 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { VictoryPie } from 'victory';
-import { Select } from 'antd';
+import { Badge, Select } from 'antd';
 import './ChartView.scss';
+import { ShareUsers } from '../../../store/types/ShareUsers';
 
 const { Option } = Select;
 
 interface ChartViewProps {
+    shareUsers: ShareUsers[];
     selectedChartData: any;
     selectRoleHandle: (role: string) => void;
 }
 
-const ChartView: React.FC<ChartViewProps> = ({ selectedChartData, selectRoleHandle }) => {
+const ChartView: React.FC<ChartViewProps> = ({ shareUsers, selectedChartData, selectRoleHandle }) => {
+    const generateColor = () => {
+        return shareUsers.map(() => '#' + Math.floor(Math.random() * 16777215).toString(16))};
+
+    const [colorArray] = useState(generateColor());
+    console.log(colorArray, 'from chartview');
+
+
     return (
         <div className='chart-container'>
             <div>
-                <Select defaultValue="Select a filter" style={{ width: 120 }} onChange={selectRoleHandle} >
+                <Select defaultValue="View by Shareholder" style={{ width: 120 }} onChange={selectRoleHandle} >
+                    <Option value="Shareholder">Shareholders</Option>
                     <Option value="Founder">Founder</Option>
                     <Option value="Investor">Investor</Option>
                     <Option value="Employee">Employee</Option>
                 </Select>
             </div>
 
-            <div>
-                <VictoryPie colorScale={["tomato", "orange", "gold", "cyan", "navy"]} width={400} data={selectedChartData} />
+            <div className='graph-container'>
+                <VictoryPie 
+                    colorScale={colorArray} 
+                    width={400} 
+                    data={selectedChartData}
+                    events={[{ 
+                        target: "data",
+                        eventHandlers: {
+                            onClick: (events) => {
+                                console.log(events, 'this ran');
+                                return [];
+                            } 
+                        }
+                    }]}
+                />
+
+                <div className='badge-container'>
+                    {shareUsers.map((user, index) => (
+                        <Badge color={colorArray[index]} key={user.id} status="success" text={`${user.shareholder} - ${user.shares}`} />
+                    ))}
+                </div>
             </div>
         </div>
     )
