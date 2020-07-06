@@ -11,7 +11,7 @@ To start the application locally, start by installing the applications dependenc
 npm install
 ```
 
-## Start APP locally
+## Start app locally
 
 To run the app locally use the `npm run start` script after all dependencies have been installed.
 
@@ -26,4 +26,9 @@ I added a simple JSON Server to return data, start the API by running simultaneo
 ```sh
 npm run startAPI
 ```
+
+## Demo Data
+
+The authentication is still a work in progress, but for now by clicking the sign-in button on the top right, it will use the JSON server to populate the app with demo data.
+
 
