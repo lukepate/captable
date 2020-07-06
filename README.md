@@ -16,7 +16,7 @@ npm install
 To run the app locally use the `npm run start` script after all dependencies have been installed.
 
 ```sh
-npm run startAPI
+npm run start
 ```
 
 ## API/Backend
