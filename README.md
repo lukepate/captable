@@ -1,5 +1,5 @@
 # CapTable
-> Simple app for tracking a company cap table.
+> Simple app for tracking a company cap table information.
 
 Insert your companies founders, employees, and investors information to get ownership data.
 
