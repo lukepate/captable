@@ -1,13 +1,7 @@
-# Product Name
+# CapTable
 > Simple app for tracking a company cap table.
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
 Insert your companies founders, employees, and investors information to get ownership data.
-
-![](header.png)
 
 ## Installation
 
