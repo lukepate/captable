@@ -4,6 +4,6 @@ export interface ShareUsers {
     role: string;
     shares: number;
     PPS: number;
-    capital: number;
+    date: string;
     ownership: number;
 }

@@ -16,24 +16,22 @@ interface TableViewProps {
     onShareHolderSubmisison: (event: any) => void;
     onCompanySubmisison: (event: any) => void;
     onShareHolderEditSubmisison: (event: any) => void;
-   
+    deleteShareholder: (currentuser: any) => void;
 }
 
 
-const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData, selectRoleHandle, onFinishFailed, onShareHolderSubmisison, onCompanySubmisison, onShareHolderEditSubmisison }) => {
+const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData, selectRoleHandle, onFinishFailed, onShareHolderSubmisison, onCompanySubmisison, onShareHolderEditSubmisison, deleteShareholder }) => {
     const [isAddUserActive, setAddUserActive] = useState(false);
     const [isEditUserActive, setEditUserActive] = useState(false);
     const [editUser, setEditUser] = useState({});
 
     const onFinishHandleCapView = (event: any) => {
-        setAddUserActive(false);
         onShareHolderSubmisison(event);
         selectRoleHandle('Shareholder');
+        setAddUserActive(false);
     }
 
-    // TODO: handle edit
     const handleEdit = (record: any) => {
-        console.log('handle edit hit');
         onShareHolderEditSubmisison(record);
         setEditUserActive(false);
     }
@@ -42,13 +40,17 @@ const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData,
         setEditUser(record);
         setEditUserActive(true);
     }
+
+    const handleDelete = (currentuser: any) => {
+        deleteShareholder(currentuser);
+        setEditUserActive(false);
+    }
     
     return (
         <div className="capview-container">
             {!isAddUserActive && !isEditUserActive && (
                 <>
                     <h1 className='capview-headline'>Ownership Overview</h1>
-                    {/* TODO set def    ault to state */}
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="Cap Table Overview" key="1">
                             <ChartView shareUsers={shareUsers} selectedChartData={selectedChartData} selectRoleHandle={selectRoleHandle} />
@@ -67,17 +69,14 @@ const CapTableView: React.FC<TableViewProps> = ({ shareUsers, selectedChartData,
             )}
             {isAddUserActive && (
                 <>
-                    <AddView onFinishFailed={onFinishFailed} onFinishHandleCapView={onFinishHandleCapView}/>
+                    <AddView onFinishFailed={onFinishFailed} onFinishHandleCapView={onFinishHandleCapView} setAddUserActive={() => setAddUserActive(false)} />
                 </>
             )}
             {isEditUserActive && (
                 <>
-                    <EditView currentuser={editUser} handleEdit={handleEdit} onFinishFailed={onFinishFailed}/>
+                    <EditView currentuser={editUser} handleEdit={handleEdit} onFinishFailed={onFinishFailed} setEditUserActive={() => setEditUserActive(false)} deleteShareholder={handleDelete}/>
                 </>
             )}
-
-                      
-
         </div>
     )
 };

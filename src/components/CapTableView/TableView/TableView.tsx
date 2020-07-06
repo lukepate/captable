@@ -12,7 +12,6 @@ const TableView: React.FC<TableViewProps> = ({ data, handleEdit }) => {
         handleEdit(record);
     };
 
-
     const columns = [
         {
             title: 'ID',
@@ -38,15 +37,24 @@ const TableView: React.FC<TableViewProps> = ({ data, handleEdit }) => {
             key: 'PPS',
         },
         {
+            title: 'Date Added',
+            dataIndex: 'date',
+            key: 'date',
+        },
+        {
             title: 'Capital',
-            dataIndex: 'capital',
             key: 'capital',
-            sorter: (a: any, b: any) => (a.capital - b.capital)
+            // sorter: (a: any, b: any) => (a.capital - b.capital),
+            render: (text: any, record: any) => (
+                <span>${record.PPS * record.shares}</span>
+            ),
         },
         {
             title: 'Ownership',
-            dataIndex: 'ownership',
             key: 'ownership',
+            render: (text: any, record: any) => (
+                <span>{record.ownership}%</span>
+            ),
         },
         {
             title: 'Action',

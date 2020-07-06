@@ -9,6 +9,14 @@
         align-items: flex-start;
     }
 
+    .no-chart-error {
+        width: 200px;
+        padding: 40px 0 40px 40px;
+        .text-padding {
+            padding-left: 4px;
+        }
+    }
+
     .badge-container {
         display: flex;
         justify-content: space-around;

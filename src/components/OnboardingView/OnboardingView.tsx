@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './OnboardingView.scss';
 import { Select, Button, Form, Input, InputNumber, Timeline, Table } from 'antd';
 import { Columns }  from '../../store/types/Column';
+// import { ShareUsers } from '../../store/types/ShareUsers';
+
 const { Option } = Select;
 
 interface OnbaordingViewProps {
@@ -15,6 +17,8 @@ interface OnbaordingViewProps {
 const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison, onCompanySubmisison, onFinishFailedHandle, data, onCompleteSetup }) => {
     const [isTimelineActice, setTimelineActice] = useState(1);
     const [form] = Form.useForm();
+    
+    //Refactor issue with loading localstorage
 
     const indexTimeline = (index: number) => {  
         if (index === isTimelineActice) return 'red';
@@ -31,7 +35,6 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
     }
 
     const onHandlShareSubmission = (event: any) => {
-        // incrementTimeline();
         form.resetFields();
         onShareHolderSubmisison(event);
     }
@@ -64,7 +67,6 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                     {isTimelineActice === 2 && (
                         <>
                             <Form
-                                // {...layout}
                                 name="basic"
                                 initialValues={{ remember: false }}
                                 onFinish={handleCompanySubmission}
@@ -73,7 +75,6 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                 <h2 className='form-headline'>Company</h2>
                                 <p className="form-instructions">This will be the  primary contact information for this company. You can also update this data later.</p>
 
-                                {/* Company Formation */}
                                 <Form.Item
                                     label="Legal Company Name"
                                     name="legalName"
@@ -81,17 +82,17 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                         required: true, message: 'Legal Company Name'
                                     }]}
                                 >
-                                    <Input />
+                                    <Input className='input' />
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="Total funding raised"
+                                    label="Total Funding Raised"
                                     name="totalRaised"
                                     rules={[{
                                         required: true, message: 'Total funding raised'
                                     }]}
                                 >
-                                    <Input />
+                                    <Input className='input'  />
                                 </Form.Item>
 
                                 <Form.Item>
@@ -114,7 +115,6 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                             
                             <h2 className='form-headline'>Add A Stakeholder</h2>
                             <Form
-                                // {...layout}
                                 form={form}
                                 id="stakeholdeForm"
                                 name="basic"
@@ -123,7 +123,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                 onFinishFailed={onFinishFailedHandle}
                             >
                                 <Form.Item
-                                    label="shareholder Name"
+                                    label="Shareholder Name"
                                     name="shareholder"
                                     rules={[{ required: true, message: 'Please input your shareholder name!' }]}
                                 >
@@ -131,7 +131,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="shares"
+                                    label="Shares"
                                     name="shares"
                                     rules={[{ required: true, message: 'Please input your shares!' }]}
                                 >
@@ -148,7 +148,7 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
 
                                 <Form.Item
                                     name="role"
-                                    label="role"
+                                    label="Role"
                                     hasFeedback
                                     rules={[{ required: true, message: 'Please select your role!' }]}
                                 >
@@ -160,19 +160,19 @@ const OnboardingView: React.FC<OnbaordingViewProps> = ({ onShareHolderSubmisison
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="Capital"
-                                    name="capital"
-                                    rules={[{ required: true, message: 'Please input your Capital!' }]}
-                                >
-                                    <InputNumber />
-                                </Form.Item>
-
-                                <Form.Item
                                     label="Ownership"
                                     name="ownership"
                                     rules={[{ required: true, message: 'Please input your Ownership!' }]}
                                 >
                                     <InputNumber />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Date Added"
+                                    name="date"
+                                    rules={[{ required: true, message: 'Please input your Ownership!' }]}
+                                >
+                                    <Input />
                                 </Form.Item>
 
                                 <Form.Item>

@@ -53,3 +53,8 @@
 
 
 ## TODO's 
+- Readme
+- Load data
+- Fix navbar 
+- Homepage
+- Data

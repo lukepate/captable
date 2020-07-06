@@ -7,9 +7,11 @@ interface AddViewProps {
     currentuser: any;
     handleEdit: (event: any) => void;
     onFinishFailed: (message: any) => void;
+    setEditUserActive: () => void;
+    deleteShareholder: (currentuser: any) => void;
 }
 
-const EditView: React.FC<AddViewProps> = ({ currentuser, handleEdit, onFinishFailed } ) => {
+const EditView: React.FC<AddViewProps> = ({ currentuser, handleEdit, onFinishFailed, setEditUserActive, deleteShareholder } ) => {
     const onSubmit = (event: any) => {
         event.id = currentuser.id;
         for (const prop in event) {
@@ -22,8 +24,7 @@ const EditView: React.FC<AddViewProps> = ({ currentuser, handleEdit, onFinishFai
 
     return (
         <>
-        {/* todo add back button */}
-            edit view works
+            <h1>Edit A Shareholder</h1>
              <Form
                 id="stakeholdeForm"
                 name="basic"
@@ -69,14 +70,6 @@ const EditView: React.FC<AddViewProps> = ({ currentuser, handleEdit, onFinishFai
                 </Form.Item>
 
                 <Form.Item
-                    label="Capital"
-                    name="capital"
-                    rules={[{ required: false, message: 'Please input your Capital!' }]}
-                >
-                    <Input defaultValue={currentuser.capital} />
-                </Form.Item>
-
-                <Form.Item
                     label="Ownership"
                     name="ownership"
                     rules={[{ required: false, message: 'Please input your Ownership!' }]}
@@ -84,10 +77,20 @@ const EditView: React.FC<AddViewProps> = ({ currentuser, handleEdit, onFinishFai
                     <Input defaultValue={currentuser.ownership} />
                 </Form.Item>
 
+                <Form.Item
+                    label="Date Added"
+                    name="date"
+                    rules={[{ required: false, message: 'Please input your Date Added!' }]}
+                >
+                    <Input defaultValue={currentuser.date} />
+                </Form.Item>
+
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">Add Stakeholder</Button>
+                    <Button type="primary" htmlType="submit">Edit Stakeholder</Button>
                 </Form.Item>
             </Form>
+            <Button onClick={() => deleteShareholder(currentuser)}>Delete Shareholder</Button>
+            <Button onClick={setEditUserActive}>Back</Button>
         </>
     )
 };

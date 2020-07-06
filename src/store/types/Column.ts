@@ -15,13 +15,13 @@ export const Columns = [
         key: 'PPS',
     },
     {
-        title: 'Capital',
-        dataIndex: 'capital',
-        key: 'capital',
-    },
-    {
         title: 'Ownership',
         dataIndex: 'ownership',
         key: 'ownership',
+    },
+    {
+        title: 'Date added',
+        dataIndex: 'date',
+        key: 'date',
     },
 ];

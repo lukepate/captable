@@ -1,0 +1,31 @@
+{
+    "users": [
+        {
+            "shareholder": "Luke",
+            "shares": 100,
+            "PPS": 4,
+            "role": "Employee",
+            "ownership": 10,
+            "date": "1/1/20",
+            "id": "xpk8pp62zza1xdk6uls1k9"
+        },  
+        {
+            "shareholder": "Jake",
+            "shares": 400,
+            "PPS": 4,
+            "role": "Founder",
+            "ownership": 10,
+            "date": "1/1/19",
+            "id": "xpk8pp62zza1xdk6uls1k8"
+        },  
+        {
+            "shareholder": "Nick",
+            "shares": 100,
+            "PPS": 4,
+            "role": "Investor",
+            "ownership": 10,
+            "date": "1/1/20",
+            "id": "xpk8pp62zza1xdk6uls2k9"
+        }
+    ]
+}

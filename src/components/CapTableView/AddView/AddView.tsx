@@ -6,14 +6,14 @@ const { Option } = Select;
 interface AddViewProps {
     onFinishHandleCapView: (event: any) => void;
     onFinishFailed: (message: any) => void;
+    setAddUserActive: () => void;
 }
 
-const AddView: React.FC<AddViewProps> = ({ onFinishHandleCapView, onFinishFailed } ) => {
+const AddView: React.FC<AddViewProps> = ({ onFinishHandleCapView, onFinishFailed, setAddUserActive } ) => {
     
     return (
         <>
-        {/* todo add back button */}
-            add view works
+            <h2>Add A New User</h2>
              <Form
                 id="stakeholdeForm"
                 name="basic"
@@ -59,25 +59,25 @@ const AddView: React.FC<AddViewProps> = ({ onFinishHandleCapView, onFinishFailed
                 </Form.Item>
 
                 <Form.Item
-                    label="Capital"
-                    name="capital"
-                    rules={[{ required: true, message: 'Please input your Capital!' }]}
-                >
-                    <InputNumber />
-                </Form.Item>
-
-                <Form.Item
                     label="Ownership"
                     name="ownership"
                     rules={[{ required: true, message: 'Please input your Ownership!' }]}
                 >
                     <InputNumber />
                 </Form.Item>
+                <Form.Item
+                    label="Date Added"
+                    name="date"
+                    rules={[{ required: true, message: 'Please input your Date Added!' }]}
+                >
+                    <Input />
+                </Form.Item>
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit">Add Stakeholder</Button>
                 </Form.Item>
             </Form>
+            <Button onClick={setAddUserActive}>Back</Button>
         </>
     )
 };
