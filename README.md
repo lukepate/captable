@@ -1,60 +1,29 @@
+# CapTable
+> Simple app for tracking a company cap table information.
 
-## AC's 
+Insert your companies founders, employees, and investors information to get ownership data.
 
-- Homepage
-    - Information describing what the service is 
-    - CTA to new user onboarding
+## Installation
 
-- Onboarding process 
-    - Steps
-        - Welcome 
-            - Total Funding
-        - Company 
-            - legal name
-            - Formation date
-        - Stakeholders 
-            - Roles 
-                - Investors
-                - Founders 
-                - Employees 
-            - User Information    
-                - How much stock
-                - Per share value
-                - Date
-                - Certificat number (option)
+To start the application locally, start by installing the applications dependencies:
 
-- Dashboard
-    - Graphs of ownership broken down by: 
-        - Category (assuming role)
-        - Per Person
-    - Sort by:  
-        - Top Shareholders
-        - Ownership Percent
-    - Ability to add new users post-onboarding 
-    - Ability to edit new Edit user post-onboarding 
+```sh
+npm install
+```
 
-- API 
-- Design
-    - Add ANTD
-- Hosting
-- README
+## Start APP locally
 
+To run the app locally use the `npm run start` script after all dependencies have been installed.
 
-## component tree
-- App 
-    - Dashboard - '/'
-        - Not signed description of service - 'dashboard'
-            - onBoarding Form '/onboarding'
-        - Signed in dashboard view - '/dashboard'
-            - ChartView
-            - TableView
-                - Add Share Holder '/shareholder'
-                - Edit User '/shareholder/2' 
+```sh
+npm run start
+```
 
+## API/Backend
 
-## TODO's 
-- Readme
-- Load data
-- Fix navbar 
-- Homepage
-- Data
+I added a simple JSON Server to return data, start the API by running simultaneously with the app's start script.
+
+```sh
+npm run startAPI
+```
+
